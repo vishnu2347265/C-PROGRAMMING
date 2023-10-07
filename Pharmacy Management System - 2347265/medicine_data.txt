@@ -1,0 +1,4 @@
+1,Paracetmol,120,30,ABCD,23-04-2016,24-04-2020,Good Medicine for Fever,This is medicine 1
+2,Gelusil,30,50,Phyriz,23-04-2021,24-04-2025,Good for Gastric Troubles,This is medicine 2
+
+
