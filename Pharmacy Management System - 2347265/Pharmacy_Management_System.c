@@ -4,7 +4,7 @@
 struct Medicine {
     int id, price, quantity;
     char medicineName[100], Company[100], Mfg_Date[11], Exp_Date[11];
-    char info[5000]; // Add a field for medicine review or info
+    char info[5000];
 };
 
 struct Customer {
@@ -18,6 +18,8 @@ void PurchaseMedicine(struct Medicine m[], int *number);
 void MedicineDetails(struct Medicine m[], int number);
 void StockOfMedicine(struct Medicine m[], int number);
 void UpdateMedicine(struct Medicine m[], int *number);
+void WriteDataToFile(struct Medicine m[], int number);
+void ReadDataFromFile(struct Medicine m[], int *number);
 
 void WriteDataToFile(struct Medicine m[], int number) {
     FILE *file = fopen("medicine_data.txt", "w");
@@ -29,7 +31,9 @@ void WriteDataToFile(struct Medicine m[], int number) {
 
     for (i = 0; i < number; i++) {
         if (m[i].id != 0) {
-            fprintf(file, "%d,%s,%d,%d,%s,%s,%s,%s,%s\n", m[i].id, m[i].medicineName, m[i].price, m[i].quantity, m[i].Company, m[i].Mfg_Date, m[i].Exp_Date, m[i].info);
+            fprintf(file, "%d,%s,%d,%d,%s,%s,%s,%s\n", m[i].id, m[i].medicineName, m[i].price, m[i].quantity, m[i].Company, m[i].Mfg_Date, m[i].Exp_Date, m[i].info)
+			
+			;
         }
     }
 
@@ -45,7 +49,7 @@ void ReadDataFromFile(struct Medicine m[], int *number) {
 
     *number = 0; // Reset the number of medicines
 
-    while (fscanf(file, "%d,%[^,],%d,%d,%[^,],%[^,],%[^,],%[^,],%[^,]\n", &m[*number].id, m[*number].medicineName, &m[*number].price, &m[*number].quantity, m[*number].Company, m[*number].Mfg_Date, m[*number].Exp_Date, m[*number].info) != EOF) {
+    while (fscanf(file, "%d,%[^,],%d,%d,%[^,],%[^,],%[^,],%[^\n]\n", &m[*number].id, m[*number].medicineName, &m[*number].price, &m[*number].quantity, m[*number].Company, m[*number].Mfg_Date, m[*number].Exp_Date, m[*number].info) != EOF) {
         (*number)++;
     }
 
@@ -78,8 +82,8 @@ int main() {
                 UpdateMedicine(m, &number);
                 break;
             }
-            case 5:{
-                WriteDataToFile(m,number);
+            case 5: {
+                WriteDataToFile(m, number);
                 break;
             }
             default:
@@ -97,7 +101,7 @@ void PurchaseMedicine(struct Medicine m[], int *number) {
     struct Customer customer;
     int check, i, quantity[100], flag = 0;
     char name[100];
-    int total_price = 0; // Initialize total_price here
+    int total_price = 0;
 
     for (i = 0; i < 100; i++) {
         quantity[i] = 0;
@@ -106,7 +110,7 @@ void PurchaseMedicine(struct Medicine m[], int *number) {
     int c;
 
     printf("\nEnter Customer Name: ");
-    scanf(" %[^\n]s", customer.name); // Read input with spaces
+    scanf(" %[^\n]s", customer.name);
     getchar(); // Consume newline character
 
     printf("Enter Customer Contact: ");
@@ -151,13 +155,13 @@ void PurchaseMedicine(struct Medicine m[], int *number) {
 
                         if (m[i].quantity >= quantity[i]) {
                             int medicine_total_price = quantity[i] * m[i].price;
-                            total_price += medicine_total_price; // Accumulate total_price correctly
+                            total_price += medicine_total_price;
 
                             printf("\nMedicine Name: %s\n", m[i].medicineName);
                             printf("Quantity Purchased: %d\n", quantity[i]);
                             printf("Total Price: %d\n", medicine_total_price);
 
-                            m[i].quantity -= quantity[i]; // Update the quantity in the inventory correctly
+                            m[i].quantity -= quantity[i];
                         } else {
                             printf("Please Enter quantity below or equal to Available Quantity\n");
                         }
@@ -169,7 +173,7 @@ void PurchaseMedicine(struct Medicine m[], int *number) {
             }
         } else {
             printf("Enter Name to search and Purchase: ");
-            scanf(" %[^\n]s", name); // Read input with spaces
+            scanf(" %[^\n]s", name);
 
             for (i = 0; i < *number; i++) {
                 if (strcmp(m[i].medicineName, name) == 0) {
@@ -192,13 +196,13 @@ void PurchaseMedicine(struct Medicine m[], int *number) {
 
                         if (m[i].quantity >= quantity[i]) {
                             int medicine_total_price = quantity[i] * m[i].price;
-                            total_price += medicine_total_price; // Accumulate total_price correctly
+                            total_price += medicine_total_price;
 
                             printf("\nMedicine Name: %s\n", m[i].medicineName);
                             printf("Quantity Purchased: %d\n", quantity[i]);
                             printf("Total Price: %d\n", medicine_total_price);
 
-                            m[i].quantity -= quantity[i]; // Update the quantity in the inventory correctly
+                            m[i].quantity -= quantity[i];
                         } else {
                             printf("Please Enter quantity below or equal to Available Quantity\n");
                         }
@@ -213,7 +217,6 @@ void PurchaseMedicine(struct Medicine m[], int *number) {
         scanf("%d", &check);
     } while (check == 1);
 
-    // Print the invoice
     printf("Total Price of all purchased medicines: %d\n", total_price);
     printf("\nInvoice:\n");
     printf("Customer Name: %s\n", customer.name);
@@ -287,26 +290,26 @@ void MedicineDetails(struct Medicine m[], int number) {
 void StockOfMedicine(struct Medicine m[], int number) {
     int choice;
     do {
-        printf("\nEnter\n1 - Find Out of Stock Products\n2 - Find Current Stock\n3 - Exit\n");
+        printf("\nEnter\n1 - Find Current Stock \n2 - Find Out of Stock Products\n3 - Exit\n");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1: {
                 int i;
-                printf("\nOut of Stock Products:\n");
+                printf("\nCurrent Stock:\n");
                 for (i = 0; i < number; i++) {
-                    if (m[i].quantity == 0) {
-                        printf("Medicine Name: %s is Out of Stock.\n", m[i].medicineName);
+                    if (m[i].id != 0) {
+                        printf("Id=%d\nName=%s\t\tAvailable Quantity=%d\n", m[i].id, m[i].medicineName, m[i].quantity);
                     }
                 }
                 break;
             }
             case 2: {
                 int i;
-                printf("\nCurrent Stock:\n");
+                printf("\nOut of Stock Products:\n");
                 for (i = 0; i < number; i++) {
-                    if (m[i].id != 0) {
-                        printf("Id=%d\nName=%s\t\tAvailable Quantity=%d\n", m[i].id, m[i].medicineName, m[i].quantity);
+                    if (m[i].quantity == 0) {
+                        printf("Medicine Name: %s is Out of Stock.\n", m[i].medicineName);
                     }
                 }
                 break;
@@ -347,66 +350,109 @@ void UpdateMedicine(struct Medicine m[], int *number) {
                 printf("Enter Expiry Date: ");
                 fgets(m[*number].Exp_Date, sizeof(m[*number].Exp_Date), stdin);
                 m[*number].Exp_Date[strcspn(m[*number].Exp_Date, "\n")] = 0;
-                printf("Enter Price: ");
-                scanf("%d", &(m[*number].price));
                 printf("Enter Quantity: ");
                 scanf("%d", &(m[*number].quantity));
-                printf("Enter Medicine Review/Info: ");
+                printf("Enter Price: ");
+                scanf("%d", &(m[*number].price));
                 getchar(); // Consume newline character
+                printf("Enter Info (Less than 5000 Characters): ");
                 fgets(info, sizeof(info), stdin);
                 info[strcspn(info, "\n")] = 0;
-                strcpy(m[*number].info, info);
+                strcpy(m[*number].info, info); // Store medicine info
+                printf("Medicine with id %d Added Successfully\n", m[*number].id);
                 (*number)++;
                 break;
             }
             case 2: {
                 // Delete Medicine
-                int id, i;
-                printf("\nEnter Medicine Id to delete: ");
+                int id, found = 0, i;
+                printf("\nEnter Id to be deleted: ");
                 scanf("%d", &id);
 
                 for (i = 0; i < *number; i++) {
                     if (m[i].id == id) {
-                        m[i].id = 0; // Mark the medicine as deleted
-                        printf("Medicine with ID %d has been deleted.\n", id);
+                        found = 1;
+                        m[i].id = 0;
+                        m[i].price = 0;
+                        m[i].quantity = 0;
+                        strcpy(m[i].medicineName, "");
+                        strcpy(m[i].Company, "");
+                        strcpy(m[i].Mfg_Date, "");
+                        strcpy(m[i].Exp_Date, "");
+                        strcpy(m[i].info, "");
+                        printf("Medicine with %d is Deleted Successfully\n", id);
                         break;
                     }
+                }
+
+                if (!found) {
+                    printf("Medicine with %d not found\n", id);
                 }
                 break;
             }
             case 3: {
                 // Change Medicine Details
-                int id, i;
-                printf("\nEnter Medicine Id to change details: ");
+                int id, quantity, c, i;
+                printf("\nEnter id to change Details: ");
                 scanf("%d", &id);
 
                 for (i = 0; i < *number; i++) {
-                    if (m[i].id == id) {
-                        printf("\nEnter New Details:\n");
-                        printf("Enter Medicine Name: ");
-                        getchar(); // Consume newline character
-                        fgets(m[i].medicineName, sizeof(m[i].medicineName), stdin);
-                        m[i].medicineName[strcspn(m[i].medicineName, "\n")] = 0;
-                        printf("Enter Company Name: ");
-                        fgets(m[i].Company, sizeof(m[i].Company), stdin);
-                        m[i].Company[strcspn(m[i].Company, "\n")] = 0;
-                        printf("Enter Manufacturing Date: ");
-                        fgets(m[i].Mfg_Date, sizeof(m[i].Mfg_Date), stdin);
-                        m[i].Mfg_Date[strcspn(m[i].Mfg_Date, "\n")] = 0;
-                        printf("Enter Expiry Date: ");
-                        fgets(m[i].Exp_Date, sizeof(m[i].Exp_Date), stdin);
-                        m[i].Exp_Date[strcspn(m[i].Exp_Date, "\n")] = 0;
-                        printf("Enter Price: ");
-                        scanf("%d", &(m[i].price));
-                        printf("Enter Quantity: ");
-                        scanf("%d", &(m[i].quantity));
-                        printf("Enter Medicine Review/Info: ");
-                        getchar(); // Consume newline character
-                        fgets(info, sizeof(info), stdin);
-                        info[strcspn(info, "\n")] = 0;
-                        strcpy(m[i].info, info);
-                        printf("Details for Medicine with ID %d have been updated.\n", id);
-                        break;
+                    if (m[i].id == id && m[i].id != 0) {
+                        do {
+                            printf("\nEnter\n1 - Change Quantity\n2 - Change Price\n3 - Change Name\n4 - Change Company\n5 - Change Manufacturing Date\n6 - Change Expiry Date\n7 - Change Info\n8 - Exit\n");
+                            scanf("%d", &choice);
+
+                            if (choice == 1) {
+                                printf("Enter Quantity to be changed: ");
+                                scanf("%d", &quantity);
+                                m[i].quantity = quantity;
+                                printf("Quantity changed Successfully\n");
+                            } else if (choice == 2) {
+                                int price;
+                                printf("Enter Price to be changed: ");
+                                scanf("%d", &price);
+                                m[i].price = price;
+                                printf("Price changed Successfully\n");
+                            } else if (choice == 3) {
+                                char name[100];
+                                getchar(); // Consume newline character
+                                printf("Enter Name to be changed: ");
+                                fgets(name, sizeof(name), stdin);
+                                name[strcspn(name, "\n")] = 0;
+                                strcpy(m[i].medicineName, name);
+                                printf("Medicine Name changed Successfully\n");
+                            } else if (choice == 4) {
+                                getchar(); // Consume newline character
+                                printf("Enter company to be changed: ");
+                                fgets(m[i].Company, sizeof(m[i].Company), stdin);
+                                m[i].Company[strcspn(m[i].Company, "\n")] = 0;
+                                printf("Company changed Successfully\n");
+                            } else if (choice == 5) {
+                                getchar(); // Consume newline character
+                                printf("Enter Manufacturing date to be changed: ");
+                                fgets(m[i].Mfg_Date, sizeof(m[i].Mfg_Date), stdin);
+                                m[i].Mfg_Date[strcspn(m[i].Mfg_Date, "\n")] = 0;
+                                printf("Manufacturing Date changed Successfully\n");
+                            } else if (choice == 6) {
+                                getchar(); // Consume newline character
+                                printf("Enter Expiry date to be changed: ");
+                                fgets(m[i].Exp_Date, sizeof(m[i].Exp_Date), stdin);
+                                m[i].Exp_Date[strcspn(m[i].Exp_Date, "\n")] = 0;
+                                printf("Expiry Date changed Successfully\n");
+                            } else if (choice == 7) {
+                                getchar(); // Consume newline character
+                                printf("Enter Info to be changed (Less than 5000 Characters): ");
+                                fgets(info, sizeof(info), stdin);
+                                info[strcspn(info, "\n")] = 0;
+                                strcpy(m[i].info, info); // Store medicine info
+                                printf("Info changed Successfully\n");
+                            } else if (choice == 8) {
+                                printf("Exiting Change Medicine Details.\n");
+                                break;
+                            } else {
+                                printf("Enter valid Choice\n");
+                            }
+                        } while (choice != 8);
                     }
                 }
                 break;
@@ -419,4 +465,6 @@ void UpdateMedicine(struct Medicine m[], int *number) {
         }
     } while (choice != 4);
 }
+
+
 

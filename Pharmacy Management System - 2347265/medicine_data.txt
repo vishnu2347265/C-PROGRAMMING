@@ -1,4 +1,15 @@
-1,Paracetmol,120,30,ABCD,23-04-2016,24-04-2020,Good Medicine for Fever,This is medicine 1
-2,Gelusil,30,50,Phyriz,23-04-2021,24-04-2025,Good for Gastric Troubles,This is medicine 2
-
-
+1,Paracetamol,5,88,ABC Pharmaceuticals,01-01-2023,01-01-2025,Effective for fever and pain relief
+2,Amoxicillin,10,30,XYZ Pharmaceuticals,02-02-2023,02-02-2025,Commonly used antibiotic
+3,Ibuprofen,8,0,DEF Pharmaceuticals,03-03-2023,03-03-2024,Pain reliever and anti-inflammatory
+4,Cetirizine,3,60,LMN Pharmaceuticals,04-04-2023,04-04-2025,Allergy relief medication
+5,Omeprazole,12,10,PQR Pharmaceuticals,05-05-2023,05-05-2024,Used for heartburn and acidity
+6,Aspirin,7,0,GHI Pharmaceuticals,06-06-2023,06-06-2024,Blood-thinning medication
+7,Atorvastatin,15,20,JKL Pharmaceuticals,07-07-2023,07-07-2024,Used to lower cholesterol
+8,Clopidogrel,20,30,MNO Pharmaceuticals,08-08-2023,08-08-2024,Antiplatelet medication
+9,Lisinopril,18,10,STU Pharmaceuticals,09-09-2023,09-09-2024,For high blood pressure
+10,Levothyroxine,22,15,VWX Pharmaceuticals,10-10-2023,10-10-2024,Thyroid hormone replacement
+11,Ranitidine,6,50,YZA Pharmaceuticals,11-11-2023,11-11-2024,For stomach ulcers
+12,Metformin,9,49,RST Pharmaceuticals,12-12-2023,12-12-2024,For diabetes management
+13,Sertraline,14,25,BCD Pharmaceuticals,13-13-2023,13-13-2024,Used for depression
+14,Alprazolam,11,35,EFG Pharmaceuticals,14-14-2023,14-14-2024,For anxiety
+15,Hydrochlorothiazide,17,5,PQS Pharmaceuticals,15-15-2023,15-15-2024,Diuretic for blood pressure
