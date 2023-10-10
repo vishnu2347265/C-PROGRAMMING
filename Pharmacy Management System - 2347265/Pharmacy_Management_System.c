@@ -275,7 +275,7 @@ void MedicineDetails(struct Medicine m[], int number) {
             case 2: {
                 // Products About to Expire
                 printf("\nProducts About to Expire:\n");
-                // Implement logic to find and display products about to expire here
+               
                 break;
             }
             case 3:
