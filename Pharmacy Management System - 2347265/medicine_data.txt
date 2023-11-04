@@ -1,5 +1,5 @@
 1,Paracetamol,5,88,ABC Pharmaceuticals,01-01-2023,01-01-2025,Effective for fever and pain relief
-2,Amoxicillin,10,30,XYZ Pharmaceuticals,02-02-2023,02-02-2025,Commonly used antibiotic
+2,Amoxicillin,10,20,XYZ Pharmaceuticals,02-02-2023,02-02-2025,Commonly used antibiotic
 3,Ibuprofen,8,0,DEF Pharmaceuticals,03-03-2023,03-03-2024,Pain reliever and anti-inflammatory
 4,Cetirizine,3,60,LMN Pharmaceuticals,04-04-2023,04-04-2025,Allergy relief medication
 5,Omeprazole,12,10,PQR Pharmaceuticals,05-05-2023,05-05-2024,Used for heartburn and acidity
